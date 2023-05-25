@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Break-A-Scene</title>
+  <link rel="icon" href="static/images/favicon.ico">
+  <link rel="canonical" href="https://omriavrahami.com/break-a-scene" />
+
+  <!-- Google tag (gtag.js) -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-C1EYR3P585"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-C1EYR3P585');
+  </script> -->
+
+  <!-- Meta tags -->
+  <meta name="keywords" content="Break-A-Scene, text-to-image personalization">
+  <meta property="og:site_name" content="Break-A-Scene">
+  <meta property="og:url" content="https://omriavrahami.com/break-a-scene">
+  <meta property="og:title" content="Break-A-Scene: Extracting Multiple Concepts from a Single Image">
+  <meta name="description" content="A method for extracting multiple concepts from a single image.">
+  <meta property="og:description" content="A method for extracting multiple concepts from a single image.">
+
+  <meta property="og:image" content="https://omriavrahami.com/break-a-scene/static/images/teaser_1200_630.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <meta property="og:image" content="https://omriavrahami.com/break-a-scene/static/images/teaser_300_300.jpg">
+  <meta property="og:image:width" content="300">
+  <meta property="og:image:height" content="300">
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" type="text/css" href="./static/slick/slick.css" />
+  <link rel="stylesheet" type="text/css" href="./static/slick/slick-theme.css" />
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script type="text/javascript" src="./static/slick/slick.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+  <!-- Authors, institutions and links -->
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Break-A-Scene: Extracting Multiple Concepts from a Single Image
+            </h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://omriavrahami.com">Omri Avrahami</a><sup>1,2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://kfiraberman.github.io/">Kfir Aberman</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://www.ohadf.com/">Ohad Fried</a><sup>4</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://danielcohenor.com/">Daniel Cohen-Or</a><sup>1,3</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://www.cs.huji.ac.il/~danix/">Dani Lischinski</a><sup>1,2</sup>
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>Google Research,</span>
+              <span class="author-block"><sup>2</sup>The Hebrew University of Jerusalem,</span>
+              <span class="author-block"><sup>3</sup>Tel Aviv University,</span>
+              <span class="author-block"><sup>4</sup>Reichman University</span>
+            </div>
+
+            <!-- <div>
+              <p style="font-size:23px;font-weight:bold;padding-top: 5px;">CVPR 2023</p>
+            </div> -->
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <span class="link-block">
+                  <a href="static/paper/Break-A-Scene.pdf" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>PDF</span>
+                  </a>
+                </span>
+
+                <!-- arXiv Link. -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/TODO" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+
+                <!-- Video Link. -->
+                <!-- <span class="link-block">
+                  <a href="https://www.youtube.com/watch?v=VlieNoCwHO4"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                    </span>
+                    <span>Video</span>
+                  </a>
+                </span> -->
+
+                <!-- Code Link. -->
+                <!-- <span class="link-block">
+                  <a href="https://github.com/omriav/blended-latent-diffusion"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span> -->
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Teaser -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <div id="teaser" class="has-text-centered">
+          <img style="width: 100%;" src="./static/images/teaser.gif" alt="Break-A-Scene teaser.">
+        </div>
+
+        <!-- <video id="teaser" autoplay="" controls="" muted="" loop="" playsinline="" height="100%">
+          <source src="static/videos/SpaText_Teaser.mp4" type="video/mp4">
+        </video> -->
+
+        <h2 class="subtitle has-text-centered">
+          <span class="method-name">Break-A-Scene</span>: Given a <i>single</i> image with <i>multiple</i> concepts,
+          annotated by loose segmentation masks, our method can learn a distinct token for each concept, and
+          use natural language guidance to re-synthesize the individual concepts or combinations of them in various
+          contexts.
+        </h2>
+      </div>
+    </div>
+  </section>
+
+  <!-- Abstract. -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Text-to-image model personalization aims to introduce a user-provided concept to the model, allowing its
+              synthesis in diverse contexts. However, current methods primarily focus on the case of learning a
+              <i>single</i> concept from <i>multiple</i> images with variations in backgrounds and poses, and struggle
+              when adapted to a different scenario. In this work, we introduce the task of textual scene decomposition:
+              given a <i>single</i> image of a scene that may contain <i>several</i> concepts, we aim to extract a
+              distinct text token for each concept, enabling fine-grained control over the generated scenes. To this
+              end, we propose augmenting the input image with masks that indicate the presence of target concepts. These
+              masks can be provided by the user or generated automatically by a pre-trained segmentation model. We then
+              present a novel two-phase customization process that optimizes a set of dedicated textual embeddings
+              (handles), as well as the model weights, striking a delicate balance between accurately capturing the
+              concepts and avoiding overfitting. We employ a masked diffusion loss to enable handles to generate their
+              assigned concepts, complemented by a novel loss on cross-attention maps to prevent entanglement. We also
+              introduce union-sampling, a training strategy aimed to improve the ability of combining multiple concepts
+              in generated images. We use several automatic metrics to quantitatively compare our method against several
+              baselines, and further affirm the results using a user study. Finally, we showcase several applications of
+              our method.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Paper video. -->
+  <!-- <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-12">
+          <div class="content has-text-justified">
+            <div class="columns is-centered has-text-centered">
+              <div class="column is-four-fifths">
+                <h2 class="title is-3">Video</h2>
+                <div class="publication-video">
+                  <iframe src="https://www.youtube.com/embed/VlieNoCwHO4?rel=0&amp;showinfo=0" frameborder="0"
+                    allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+  <!-- Method explanation -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-12">
+          <h2 class="title is-3">Method</h2>
+
+          <div class="content has-text-justified">
+
+            <p>
+              Humans have a natural ability to decompose complex scenes into their constituent parts and envision them
+              in diverse contexts. For instance, given a photo of a ceramic artwork depicting a creature seated on a
+              bowl, one can effortlessly imagine the <i>same creature</i> in a variety of different
+              poses and locations, or envision the <i>same bowl</i> in a new setting. However, today's generative models
+              struggle when confronted with this type of task.
+            </p>
+
+            <div class="container">
+              <img src="./static/images/method.jpg" />
+              <br />
+            </div>
+
+            <p>
+              In this work, we propose a novel customization pipeline that effectively balances the preservation of
+              learned concept identity with the avoidance of overfitting. Our pipeline, depicted above, consists of
+              <strong>two phases</strong>. In the first phase, we designate a set of dedicated text tokens (handles),
+              freeze the model weights, and optimize the handles to reconstruct the input image. In the second phase, we
+              switch to fine-tuning the model weights, while continuing to optimize the handles.
+            </p>
+
+            <p>
+              We also recognize that in order to generate images exhibiting combinations of concepts, the customization
+              process cannot be carried out separately for each concept. This observation leads us to introduce
+              <strong>union-sampling</strong>, a training strategy that addresses this requirement and enhances the
+              generation of concept combinations.
+            </p>
+
+            <p>
+              A crucial focus of our approach is on disentangled concept extraction, i.e., ensuring that each handle is
+              associated with only a single target concept. To achieve this, we employ a <strong>masked version</strong>
+              of the standard diffusion loss, which guarantees that each custom handle can generate its designated
+              concept; however, this loss does not penalize the model for associating a handle with multiple concepts.
+              Our main insight is that we can penalize such entanglement by additionally imposing a loss on the
+              <strong> cross-attention maps</strong>, known to correlate with the scene layout. This additional loss
+              ensures that each handle attends only to the areas covered by its target concept.
+            </p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scene Breaking Examples -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-12">
+          <h2 class="title is-3">Results</h2>
+          <h3 class="title is-4">Scene Breaking Examples</h3>
+          <div class="content has-text-justified">
+            <p>
+              Here are some results of scene breaking and re-synthesis in different contexts and combinations:
+            </p>
+          </div>
+
+          <section class="hero is-light is-small">
+            <div class="hero-body">
+              <div class="container">
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/scene_breaking/mask_overlay.jpg" />
+                    <p class="caption prompt">Input scene</p>
+                  </div>
+                </div>
+
+                <br />
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/scene_breaking/v0_on_a_solid_background_0.jpg" />
+                    <p class="caption prompt">"A photo of <span class="token-a"></span> on a solid background"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/scene_breaking/v1_on_a_solid_background_0.jpg" />
+                    <p class="caption prompt">"A photo of <span class="token-b"></span> on a solid background"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/scene_breaking/v2_on_a_solid_background_0.jpg" />
+                    <p class="caption prompt">"A photo of <span class="token-c"></span> on a solid background"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/scene_breaking/v3_empty_0.jpg" />
+                    <p class="caption prompt">"A photo of <span class="token-bg"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/scene_breaking/v0_and_its_child_at_the_beach_0.jpg" />
+                    <p class="caption prompt">"A photo of <span class="token-a"></span> and its child at the beach"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/scene_breaking/v0_sitting_on_an_avocado_in_the_desert_0.jpg" />
+                    <p class="caption prompt">"A photo of <span class="token-a"></span> sitting on an avocado in the
+                      desert"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/scene_breaking/v0_sitting_on_an_avocado_at_v3_0.jpg" />
+                    <p class="caption prompt">"A photo of <span class="token-a"></span> sitting on an avocado at <span
+                        class="token-bg"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/scene_breaking/v1_on_the_road_0.jpg" />
+                    <p class="caption prompt">"A photo of <span class="token-b"></span> on the road"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/scene_breaking/v1_at_v3.jpg" />
+                    <p class="caption prompt">"A photo of <span class="token-b"></span> at <span
+                        class="token-bg"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img
+                      src="./static/images/examples/scene_breaking/pile_of_v2_in_a_straw_bag_near_the_eiffel_tower_0.jpg" />
+                    <p class="caption prompt">"A photo of a pile of <span class="token-b"></span> in a straw basket near
+                      the Eiffel Tower"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/scene_breaking/pile_of_v2_in_a_at_v3.jpg" />
+                    <p class="caption prompt">"A photo of a pile of <span class="token-b"></span> in a straw basket at
+                      <span class="token-bg"></span>"
+                    </p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/scene_breaking/v0_sleeping_inside_v1_in_the_snow.jpg" />
+                    <p class="caption prompt">"A photo of <span class="token-a"></span> sleeping inside <span
+                        class="token-b"></span> in the snow"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/scene_breaking/v0_and_v2_in_times_square_0.jpg" />
+                    <p class="caption prompt">"A photo of <span class="token-a"></span> and <span
+                        class="token-c"></span> at Times Square"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/scene_breaking/painting_of_v2_inside_v1.jpg" />
+                    <p class="caption prompt">"A painting of <span class="token-c"></span> inside <span
+                        class="token-b"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/scene_breaking/v0_and_v1_and_v2_with_flowers.jpg" />
+                    <p class="caption prompt">"A photo of <span class="token-a"></span> and <span
+                        class="token-b"></span> and <span class="token-c"></span> with flowers in the background"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/scene_breaking/grumpy_cat_at_v3.jpg" />
+                    <p class="caption prompt">"A photo of a grumpy cat at <span class="token-bg"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/scene_breaking/small_albino_porcupine_at_v2.jpg" />
+                    <p class="caption prompt">"A photo of a small albino porcupine at <span class="token-bg"></span>"
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Entangled Scene Decomposition -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-12">
+          <h3 class="title is-4">Entangled Scene Decomposition</h3>
+          <div class="content has-text-justified">
+            <p>
+              Our method is also capable of breaking entangled scenes:
+            </p>
+          </div>
+
+          <!-- Dog example -->
+          <section class="hero is-light is-small">
+            <div class="hero-body">
+              <div class="container">
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/dog_shirt/mask_overlay.jpg" />
+                    <p class="caption prompt">Input scene</p>
+                  </div>
+                </div>
+                <br />
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/dog_shirt/v0_on_a_solid_background_1.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> on a solid background"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/dog_shirt/v1_on_a_solid_background_1.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-b"></span> on a solid background"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/dog_shirt/empty1.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-bg"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/dog_shirt/cat_forest.jpg" />
+                    <p class="caption prompt">"a photo of a cat wearing <span class="token-b"></span> in the forest"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/dog_shirt/dog_Stonehenge.jpg" />
+                    <p class="caption prompt">"a photo of a <span class="token-a"></span> running near Stonehenge"</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <br />
+          <!-- Cat example -->
+          <section class="hero is-light is-small">
+            <div class="hero-body">
+              <div class="container">
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/cat_glasses_shirt/mask_overlay.jpg" />
+                    <p class="caption prompt">Input scene</p>
+                  </div>
+                </div>
+
+                <br />
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/cat_glasses_shirt/v0_solid.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> on a solid background"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/cat_glasses_shirt/v1_solid.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-b"></span> on a solid background"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/cat_glasses_shirt/v2_table.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-c"></span> on a table"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/cat_glasses_shirt/v0_swimming.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> swimming"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/cat_glasses_shirt/v1_labrador.jpg" />
+                    <p class="caption prompt">"a photo of a Labrador wearing <span class="token-b"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/cat_glasses_shirt/v2_lion.jpg" />
+                    <p class="caption prompt">"a photo of a lion wearing <span class="token-c"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/cat_glasses_shirt/v0_v1_beach.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> wearing <span
+                        class="token-b"></span> at the beach"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/cat_glasses_shirt/v1_v2_pig.jpg" />
+                    <p class="caption prompt">"a photo of a pig wearing <span class="token-b"></span> and <span
+                        class="token-c"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/cat_glasses_shirt/v0_v1_v2_wooden.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> wearing <span
+                        class="token-b"></span> and <span class="token-c"></span> on a wooden floor"</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <br />
+          <!-- Bear example -->
+          <section class="hero is-light is-small">
+            <div class="hero-body">
+              <div class="container">
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/bear_statue/mask_overlay.jpg" />
+                    <p class="caption prompt">Input scene</p>
+                  </div>
+                </div>
+
+                <br />
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/bear_statue/v0_solid.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> on a solid background"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/bear_statue/v1_solid.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-b"></span> on a solid background"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/bear_statue/v2_solid.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-c"></span> on a solid background"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/bear_statue/v0_selfie_desert.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> taking a selfie in the desert"
+                    </p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/bear_statue/v1_on_Moai_statue.jpg" />
+                    <p class="caption prompt">"a photo of a Moai statue wearing <span class="token-b"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/bear_statue/v2_parrot.jpg" />
+                    <p class="caption prompt">"a photo of a parrot wearing <span class="token-c"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/bear_statue/v0_v1_snow.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> and <span
+                        class="token-b"></span>
+                      in the snow"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/bear_statue/v0_v2_lake.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> wearing <span
+                        class="token-c"></span> near a lake"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/bear_statue/v1_v2_owl.jpg" />
+                    <p class="caption prompt">"a photo of an owl wearing <span class="token-b"></span> and <span
+                        class="token-c"></span>"</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Local image editing -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-12">
+          <h3 class="title is-4">Local Image editing</h3>
+          <div class="content has-text-justified">
+            <p>
+              Our incorporate our method with <a href="https://omriavrahami.com/blended-latent-diffusion-page/">Blended
+                Latent Diffusion</a> to achieve local image editing by example:
+            </p>
+          </div>
+
+          <!-- Creature -->
+          <section class="hero is-light is-small">
+            <div class="hero-body">
+              <div class="container">
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/empty_paintings/mask_overlay.jpg" />
+                    <p class="caption prompt">Input scene</p>
+                  </div>
+                </div>
+
+                <br />
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/empty_paintings/img.jpg" />
+                    <p class="caption prompt">Input image to edit</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/empty_paintings/mask_overlay1.jpg" />
+                    <p class="caption prompt">"a painting of <span class="token-a"></span> eating a burger"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/empty_paintings/edit1.jpg" />
+                    <p class="caption prompt">"a painting of <span class="token-b"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/empty_paintings/edit2.jpg" />
+                    <p class="caption prompt">Edit result</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <br />
+          <!-- Panda -->
+          <section class="hero is-light is-small">
+            <div class="hero-body">
+              <div class="container">
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/grass/mask_overlay.jpg" />
+                    <p class="caption prompt">Input scene</p>
+                  </div>
+                </div>
+
+                <br />
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/grass/img.jpg" />
+                    <p class="caption prompt">Input image to edit</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/grass/img_overlay.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-c"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/grass/edit1_overlay.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-b"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/grass/edit2_overlay.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/grass/edit3.jpg" />
+                    <p class="caption prompt">Edit result</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <br />
+          <!-- Chicken -->
+          <section class="hero is-light is-small">
+            <div class="hero-body">
+              <div class="container">
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/flowers/mask_overlay.jpg" />
+                    <p class="caption prompt">Input scene</p>
+                  </div>
+                </div>
+
+                <br />
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/flowers/img.jpg" />
+                    <p class="caption prompt">Input image to edit</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/flowers/img_overlay.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/flowers/edit1_overlay.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-b"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/flowers/edit2_overlay.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-c"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/flowers/edit3.jpg" />
+                    <p class="caption prompt">Edit result</p>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <br />
+          <!-- Sheep -->
+          <section class="hero is-light is-small">
+            <div class="hero-body">
+              <div class="container">
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/floor/mask_overlay.jpg" />
+                    <p class="caption prompt">Input scene</p>
+                  </div>
+                </div>
+
+                <br />
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/floor/img.jpg" />
+                    <p class="caption prompt">Input image to edit</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/floor/img_overlay.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/floor/edit1_overlay.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-c"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/floor/edit2_overlay.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-b"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/floor/edit3.jpg" />
+                    <p class="caption prompt">Edit result</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Background extraction -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-12">
+          <h3 class="title is-4">Background Extraction</h3>
+          <div class="content has-text-justified">
+            <p>
+              Our method is also capable of extracting the background of a scene for further edits:
+            </p>
+          </div>
+
+          <section class="hero is-light is-small">
+            <div class="hero-body">
+              <div class="container">
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/background_extraction/mask_overlay.jpg" />
+                    <p class="caption prompt">Input scene</p>
+                  </div>
+                </div>
+
+                <br />
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/background_extraction/empty1.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-bg"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/background_extraction/car.jpg" />
+                    <p class="caption prompt">"a photo of a car at <span class="token-bg"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/background_extraction/elephant.jpg" />
+                    <p class="caption prompt">"a photo of an elephant at <span class="token-bg"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/background_extraction/lighthouse.jpg" />
+                    <p class="caption prompt">"a photo of a lighthouse at <span class="token-bg"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/background_extraction/house.jpg" />
+                    <p class="caption prompt">"a photo of a house at <span class="token-bg"></span>"</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Image variations -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-12">
+          <h3 class="title is-4">Image variations</h3>
+          <div class="content has-text-justified">
+            <p>
+              Given a single image containing multiple concepts of interest, once these are extracted using our method,
+              they can be used to generate multiple variations of the image. The arrangement of the objects in the
+              scene, as well as the background, are different in each generation.
+            </p>
+          </div>
+
+          <!-- Dog -->
+          <section class="hero is-light is-small">
+            <div class="hero-body">
+              <div class="container">
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/image_variations/dog_ball/mask_overlay.jpg" />
+                    <p class="caption prompt">Input scene</p>
+                  </div>
+                </div>
+
+                <br />
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/image_variations/dog_ball/var0.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> and <span
+                        class="token-b"></span>
+                      and <span class="token-c"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/image_variations/dog_ball/var1.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> and <span
+                        class="token-b"></span>
+                      and <span class="token-c"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/image_variations/dog_ball/var2.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> and <span
+                        class="token-b"></span>
+                      and <span class="token-c"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/image_variations/dog_ball/var4.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> and <span
+                        class="token-b"></span>
+                      and <span class="token-c"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/image_variations/dog_ball/var5.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> and <span
+                        class="token-b"></span>
+                      and <span class="token-c"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/image_variations/dog_ball/var6.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> and <span
+                        class="token-b"></span>
+                      and <span class="token-c"></span>"</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Cat -->
+          <br />
+          <section class="hero is-light is-small">
+            <div class="hero-body">
+              <div class="container">
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/cat_glasses_shirt/mask_overlay.jpg" />
+                    <p class="caption prompt">Input scene</p>
+                  </div>
+                </div>
+
+                <br />
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/image_variations/cat_glasses/var0.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> and <span
+                        class="token-b"></span>
+                      and <span class="token-c"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/image_variations/cat_glasses/var1.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> and <span
+                        class="token-b"></span>
+                      and <span class="token-c"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/image_variations/cat_glasses/var2.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> and <span
+                        class="token-b"></span>
+                      and <span class="token-c"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/image_variations/cat_glasses/var3.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> and <span
+                        class="token-b"></span>
+                      and <span class="token-c"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/image_variations/cat_glasses/var4.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> and <span
+                        class="token-b"></span>
+                      and <span class="token-c"></span>"</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Bear -->
+          <br />
+          <section class="hero is-light is-small">
+            <div class="hero-body">
+              <div class="container">
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/entangled_scene/bear_statue/mask_overlay.jpg" />
+                    <p class="caption prompt">Input scene</p>
+                  </div>
+                </div>
+
+                <br />
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/image_variations/bear_hat/var0.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> and <span
+                        class="token-b"></span>
+                      and <span class="token-c"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/image_variations/bear_hat/var1.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> and <span
+                        class="token-b"></span>
+                      and <span class="token-c"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/image_variations/bear_hat/var2.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> and <span
+                        class="token-b"></span>
+                      and <span class="token-c"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/image_variations/bear_hat/var3.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> and <span
+                        class="token-b"></span>
+                      and <span class="token-c"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/image_variations/bear_hat/var4.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> and <span
+                        class="token-b"></span>
+                      and <span class="token-c"></span>"</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Panda -->
+          <br />
+          <section class="hero is-light is-small">
+            <div class="hero-body">
+              <div class="container">
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/bld/grass/mask_overlay.jpg" />
+                    <p class="caption prompt">Input scene</p>
+                  </div>
+                </div>
+
+                <br />
+                <div id="results-carousel" class="carousel results-carousel">
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/image_variations/panda_table/var0.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> and <span
+                        class="token-b"></span>
+                      and <span class="token-c"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/image_variations/panda_table/var1.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> and <span
+                        class="token-b"></span>
+                      and <span class="token-c"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/image_variations/panda_table/var2.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> and <span
+                        class="token-b"></span>
+                      and <span class="token-c"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/image_variations/panda_table/var3.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> and <span
+                        class="token-b"></span>
+                      and <span class="token-c"></span>"</p>
+                  </div>
+
+                  <div class="item has-text-centered">
+                    <img src="./static/images/examples/image_variations/panda_table/var4.jpg" />
+                    <p class="caption prompt">"a photo of <span class="token-a"></span> and <span
+                        class="token-b"></span>
+                      and <span class="token-c"></span>"</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <p>If you find this research useful, please cite the following:</p>
+
+      <pre><code>@InProceedings{Avrahami_2023_CVPR,
+    author    = {Avrahami, Omri and Hayes, Thomas and Gafni, Oran and Gupta, Sonal and Taigman, Yaniv and Parikh, Devi and Lischinski, Dani and Fried, Ohad and Yin, Xi},
+    title     = {SpaText: Spatio-Textual Representation for Controllable Image Generation},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2023},
+    pages     = {18370-18380}
+}</code></pre>
+    </div>
+  </section> -->
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <p>
+          This page was adapted from <a href="https://github.com/nerfies/nerfies.github.io">this</a> source code.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
